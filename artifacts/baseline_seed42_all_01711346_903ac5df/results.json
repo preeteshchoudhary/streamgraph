@@ -1,0 +1,82 @@
+{
+  "stage": "milestone_1",
+  "scope": "validation / model selection",
+  "created_at": "2026-11-06T11:02:23.262244+00:00",
+  "seed": 42,
+  "feature_view": "all",
+  "features": 165,
+  "config_sha256": "017113466d3a68521aab027a68349263fec93936cb63ca3cb3f243cfb44c8c90",
+  "dataset_fingerprint": "903ac5dfcabafb86638bbceddef49530bdad2743c6cfe71a7d1c78bf0da9f043",
+  "fit_audit": {
+    "source_rows": 16044,
+    "min_source_step": 1,
+    "max_source_step": 16,
+    "unknown_labels_used_in_supervised_fit": 0,
+    "adaptation_labels_used_in_supervised_fit": 0,
+    "validation_labels_used_in_supervised_fit": 0,
+    "final_test_rows_used_in_fit_or_prediction": 0,
+    "training_transaction_ids_sha256": "aeee6c8db8483c130b64c9e2997a0d04084e6094f4d695b67a50531c43aa5849"
+  },
+  "final_test_evaluated": false,
+  "threshold_rule": "maximum validation illicit F1; highest threshold breaks ties",
+  "notes": [
+    "One initial seed; not a multi-seed research conclusion.",
+    "Validation selects epochs and thresholds; scores are not held-out test performance.",
+    "Baselines use only the source interval; the adaptation prefix is reserved for later DANN work."
+  ],
+  "environment": {
+    "python": "3.13.14",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scikit-learn": "1.8.0"
+  },
+  "models": {
+    "random_forest": {
+      "average_precision": 0.7511523215492639,
+      "precision_illicit": 0.9075342465753424,
+      "recall_illicit": 0.6395816572807723,
+      "f1_illicit": 0.7503539405379896,
+      "balanced_accuracy": 0.8117630783926161,
+      "threshold": 0.19670550186688857,
+      "confusion_matrix_labels_0_1": [
+        [
+          4964,
+          81
+        ],
+        [
+          448,
+          795
+        ]
+      ],
+      "known_nodes": 6288,
+      "illicit_nodes": 1243,
+      "fit_seconds": 1.5806701670007897,
+      "validation_prediction_seconds": 0.026895916998910252
+    },
+    "mlp": {
+      "average_precision": 0.5662233633452473,
+      "precision_illicit": 0.6758817921830315,
+      "recall_illicit": 0.5703942075623492,
+      "f1_illicit": 0.618673647469459,
+      "balanced_accuracy": 0.7515003743460904,
+      "threshold": 0.8149588108062744,
+      "confusion_matrix_labels_0_1": [
+        [
+          4705,
+          340
+        ],
+        [
+          534,
+          709
+        ]
+      ],
+      "known_nodes": 6288,
+      "illicit_nodes": 1243,
+      "fit_and_validation_selection_seconds": 0.21662858399940887,
+      "validation_prediction_seconds": 0.0013765829935437068,
+      "best_epoch": 1,
+      "epochs_run": 7,
+      "scaler_fit_max_time_step": 16
+    }
+  }
+}

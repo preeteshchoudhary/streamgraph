@@ -1,0 +1,29 @@
+{
+  "milestone": "1 - dataset integrity and chronological baselines",
+  "dataset_nodes": 203769,
+  "dataset_edges": 234355,
+  "source_training_known_nodes": 16044,
+  "validation_known_nodes": 6288,
+  "random_forest_validation_ap": 0.7480704166440473,
+  "mlp_validation_ap": 0.5662233633452473,
+  "integrity_tests_passed": 10,
+  "notebook_cell_logic_executed": true,
+  "final_test_evaluated": false,
+  "validated_python": "3.12.14",
+  "scope_note": "One seed; validation selected checkpoints and thresholds. These are development measurements.",
+  "implemented": [
+    "official-mirror download",
+    "ID-based joins",
+    "label masking",
+    "chronological splits",
+    "source-only scaling",
+    "RF and MLP",
+    "graph snapshot export",
+    "HTML report"
+  ],
+  "next": [
+    "GraphSAGE",
+    "DANN/GRL",
+    "Spark snapshot replay"
+  ]
+}

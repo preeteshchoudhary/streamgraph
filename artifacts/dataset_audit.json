@@ -1,0 +1,467 @@
+{
+  "created_at": "2026-11-06T11:02:23.257568+00:00",
+  "dataset": "Elliptic original release",
+  "nodes": 203769,
+  "edges": 234355,
+  "numeric_features_without_time": 165,
+  "label_mapping": {
+    "1": "illicit=1",
+    "2": "licit=0",
+    "unknown": -1
+  },
+  "labels": {
+    "licit": 42019,
+    "illicit": 4545,
+    "unknown": 157205
+  },
+  "cross_step_edges": 0,
+  "raw_file_hashes": {
+    "elliptic_txs_features.csv": "fd7f83573443c9e302e371d3f110e3b6224160f5d1ed8a287757936127800ff0",
+    "elliptic_txs_edgelist.csv": "a35053ba68a98e4382cae2ba65b9d9e36b23b6439e02dff084971b1b72a5156e",
+    "elliptic_txs_classes.csv": "93e2e7b2405c735ba752bf6ba06b947561deddd1f5a8fc91e46f6a4c0e439493"
+  },
+  "dataset_fingerprint": "903ac5dfcabafb86638bbceddef49530bdad2743c6cfe71a7d1c78bf0da9f043",
+  "config_sha256": "017113466d3a68521aab027a68349263fec93936cb63ca3cb3f243cfb44c8c90",
+  "feature_view": "all",
+  "splits": {
+    "source": {
+      "time_steps": [
+        1,
+        16
+      ],
+      "nodes": 77604,
+      "known_labels": 16044,
+      "licit": 14764,
+      "illicit": 1280,
+      "unknown": 61560
+    },
+    "adaptation": {
+      "time_steps": [
+        17,
+        24
+      ],
+      "nodes": 31346,
+      "known_labels": 7562,
+      "licit": 6623,
+      "illicit": 939,
+      "unknown": 23784
+    },
+    "validation": {
+      "time_steps": [
+        25,
+        34
+      ],
+      "nodes": 27315,
+      "known_labels": 6288,
+      "licit": 5045,
+      "illicit": 1243,
+      "unknown": 21027
+    },
+    "test": {
+      "time_steps": [
+        35,
+        49
+      ],
+      "nodes": 67504,
+      "known_labels": 16670,
+      "licit": 15587,
+      "illicit": 1083,
+      "unknown": 50834
+    }
+  },
+  "per_time_step": [
+    {
+      "time_step": 1,
+      "nodes": 7880,
+      "edges": 9164,
+      "licit": 2130,
+      "illicit": 17,
+      "unknown": 5733
+    },
+    {
+      "time_step": 2,
+      "nodes": 4544,
+      "edges": 5241,
+      "licit": 1099,
+      "illicit": 18,
+      "unknown": 3427
+    },
+    {
+      "time_step": 3,
+      "nodes": 6621,
+      "edges": 8316,
+      "licit": 1268,
+      "illicit": 11,
+      "unknown": 5342
+    },
+    {
+      "time_step": 4,
+      "nodes": 5693,
+      "edges": 8180,
+      "licit": 1410,
+      "illicit": 30,
+      "unknown": 4253
+    },
+    {
+      "time_step": 5,
+      "nodes": 6803,
+      "edges": 8623,
+      "licit": 1874,
+      "illicit": 8,
+      "unknown": 4921
+    },
+    {
+      "time_step": 6,
+      "nodes": 4328,
+      "edges": 5242,
+      "licit": 480,
+      "illicit": 5,
+      "unknown": 3843
+    },
+    {
+      "time_step": 7,
+      "nodes": 6048,
+      "edges": 7253,
+      "licit": 1101,
+      "illicit": 102,
+      "unknown": 4845
+    },
+    {
+      "time_step": 8,
+      "nodes": 4457,
+      "edges": 5186,
+      "licit": 1098,
+      "illicit": 67,
+      "unknown": 3292
+    },
+    {
+      "time_step": 9,
+      "nodes": 4996,
+      "edges": 5939,
+      "licit": 530,
+      "illicit": 248,
+      "unknown": 4218
+    },
+    {
+      "time_step": 10,
+      "nodes": 6727,
+      "edges": 8588,
+      "licit": 954,
+      "illicit": 18,
+      "unknown": 5755
+    },
+    {
+      "time_step": 11,
+      "nodes": 4296,
+      "edges": 4656,
+      "licit": 565,
+      "illicit": 131,
+      "unknown": 3600
+    },
+    {
+      "time_step": 12,
+      "nodes": 2047,
+      "edges": 2213,
+      "licit": 490,
+      "illicit": 16,
+      "unknown": 1541
+    },
+    {
+      "time_step": 13,
+      "nodes": 4528,
+      "edges": 4827,
+      "licit": 518,
+      "illicit": 291,
+      "unknown": 3719
+    },
+    {
+      "time_step": 14,
+      "nodes": 2022,
+      "edges": 2078,
+      "licit": 374,
+      "illicit": 43,
+      "unknown": 1605
+    },
+    {
+      "time_step": 15,
+      "nodes": 3639,
+      "edges": 3823,
+      "licit": 471,
+      "illicit": 147,
+      "unknown": 3021
+    },
+    {
+      "time_step": 16,
+      "nodes": 2975,
+      "edges": 3120,
+      "licit": 402,
+      "illicit": 128,
+      "unknown": 2445
+    },
+    {
+      "time_step": 17,
+      "nodes": 3385,
+      "edges": 3650,
+      "licit": 712,
+      "illicit": 99,
+      "unknown": 2574
+    },
+    {
+      "time_step": 18,
+      "nodes": 1976,
+      "edges": 2115,
+      "licit": 337,
+      "illicit": 52,
+      "unknown": 1587
+    },
+    {
+      "time_step": 19,
+      "nodes": 3506,
+      "edges": 3838,
+      "licit": 665,
+      "illicit": 80,
+      "unknown": 2761
+    },
+    {
+      "time_step": 20,
+      "nodes": 4291,
+      "edges": 4755,
+      "licit": 640,
+      "illicit": 260,
+      "unknown": 3391
+    },
+    {
+      "time_step": 21,
+      "nodes": 3537,
+      "edges": 3959,
+      "licit": 541,
+      "illicit": 100,
+      "unknown": 2896
+    },
+    {
+      "time_step": 22,
+      "nodes": 5894,
+      "edges": 7014,
+      "licit": 1605,
+      "illicit": 158,
+      "unknown": 4131
+    },
+    {
+      "time_step": 23,
+      "nodes": 4165,
+      "edges": 4584,
+      "licit": 1134,
+      "illicit": 53,
+      "unknown": 2978
+    },
+    {
+      "time_step": 24,
+      "nodes": 4592,
+      "edges": 5124,
+      "licit": 989,
+      "illicit": 137,
+      "unknown": 3466
+    },
+    {
+      "time_step": 25,
+      "nodes": 2314,
+      "edges": 2619,
+      "licit": 476,
+      "illicit": 118,
+      "unknown": 1720
+    },
+    {
+      "time_step": 26,
+      "nodes": 2523,
+      "edges": 2690,
+      "licit": 421,
+      "illicit": 96,
+      "unknown": 2006
+    },
+    {
+      "time_step": 27,
+      "nodes": 1089,
+      "edges": 1168,
+      "licit": 182,
+      "illicit": 24,
+      "unknown": 883
+    },
+    {
+      "time_step": 28,
+      "nodes": 1653,
+      "edges": 1717,
+      "licit": 199,
+      "illicit": 85,
+      "unknown": 1369
+    },
+    {
+      "time_step": 29,
+      "nodes": 4275,
+      "edges": 4541,
+      "licit": 845,
+      "illicit": 329,
+      "unknown": 3101
+    },
+    {
+      "time_step": 30,
+      "nodes": 2483,
+      "edges": 2561,
+      "licit": 441,
+      "illicit": 83,
+      "unknown": 1959
+    },
+    {
+      "time_step": 31,
+      "nodes": 2816,
+      "edges": 3049,
+      "licit": 604,
+      "illicit": 106,
+      "unknown": 2106
+    },
+    {
+      "time_step": 32,
+      "nodes": 4525,
+      "edges": 4952,
+      "licit": 981,
+      "illicit": 342,
+      "unknown": 3202
+    },
+    {
+      "time_step": 33,
+      "nodes": 3151,
+      "edges": 3366,
+      "licit": 418,
+      "illicit": 23,
+      "unknown": 2710
+    },
+    {
+      "time_step": 34,
+      "nodes": 2486,
+      "edges": 2692,
+      "licit": 478,
+      "illicit": 37,
+      "unknown": 1971
+    },
+    {
+      "time_step": 35,
+      "nodes": 5507,
+      "edges": 6351,
+      "licit": 1159,
+      "illicit": 182,
+      "unknown": 4166
+    },
+    {
+      "time_step": 36,
+      "nodes": 6393,
+      "edges": 7813,
+      "licit": 1675,
+      "illicit": 33,
+      "unknown": 4685
+    },
+    {
+      "time_step": 37,
+      "nodes": 3306,
+      "edges": 3849,
+      "licit": 458,
+      "illicit": 40,
+      "unknown": 2808
+    },
+    {
+      "time_step": 38,
+      "nodes": 2891,
+      "edges": 3094,
+      "licit": 645,
+      "illicit": 111,
+      "unknown": 2135
+    },
+    {
+      "time_step": 39,
+      "nodes": 2760,
+      "edges": 2914,
+      "licit": 1102,
+      "illicit": 81,
+      "unknown": 1577
+    },
+    {
+      "time_step": 40,
+      "nodes": 4481,
+      "edges": 5246,
+      "licit": 1099,
+      "illicit": 112,
+      "unknown": 3270
+    },
+    {
+      "time_step": 41,
+      "nodes": 5342,
+      "edges": 6093,
+      "licit": 1016,
+      "illicit": 116,
+      "unknown": 4210
+    },
+    {
+      "time_step": 42,
+      "nodes": 7140,
+      "edges": 8493,
+      "licit": 1915,
+      "illicit": 239,
+      "unknown": 4986
+    },
+    {
+      "time_step": 43,
+      "nodes": 5063,
+      "edges": 5950,
+      "licit": 1346,
+      "illicit": 24,
+      "unknown": 3693
+    },
+    {
+      "time_step": 44,
+      "nodes": 4975,
+      "edges": 5551,
+      "licit": 1567,
+      "illicit": 24,
+      "unknown": 3384
+    },
+    {
+      "time_step": 45,
+      "nodes": 5598,
+      "edges": 6673,
+      "licit": 1216,
+      "illicit": 5,
+      "unknown": 4377
+    },
+    {
+      "time_step": 46,
+      "nodes": 3519,
+      "edges": 3866,
+      "licit": 710,
+      "illicit": 2,
+      "unknown": 2807
+    },
+    {
+      "time_step": 47,
+      "nodes": 5121,
+      "edges": 5748,
+      "licit": 824,
+      "illicit": 22,
+      "unknown": 4275
+    },
+    {
+      "time_step": 48,
+      "nodes": 2954,
+      "edges": 3284,
+      "licit": 435,
+      "illicit": 36,
+      "unknown": 2483
+    },
+    {
+      "time_step": 49,
+      "nodes": 2454,
+      "edges": 2587,
+      "licit": 420,
+      "illicit": 56,
+      "unknown": 1978
+    }
+  ],
+  "final_test_predictions_generated": false
+}
