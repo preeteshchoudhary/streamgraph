@@ -1,0 +1,222 @@
+{
+  "stage": "milestone_2_graphsage",
+  "scope": "validation / model selection",
+  "created_at": "2026-11-06T11:56:27.646581+00:00",
+  "seed": 42,
+  "feature_view": "all",
+  "edge_mode": "none",
+  "features": 165,
+  "config_sha256": "4b6a1ba76d834ba7c0bd34f6d72c49c32c0fdeb51f2cfaf6e7f0d6e4c7defbeb",
+  "protocol_config_sha256": "017113466d3a68521aab027a68349263fec93936cb63ca3cb3f243cfb44c8c90",
+  "dataset_fingerprint": "903ac5dfcabafb86638bbceddef49530bdad2743c6cfe71a7d1c78bf0da9f043",
+  "final_test_evaluated": false,
+  "fit_audit": {
+    "source_rows": 16044,
+    "source_snapshot_steps": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "validation_snapshot_steps": [
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34
+    ],
+    "scaler_fit_max_time_step": 16,
+    "unknown_labels_used_in_supervised_fit": 0,
+    "adaptation_prefix_used": false,
+    "final_test_rows_used_in_fit_or_prediction": 0,
+    "training_transaction_ids_sha256": "aeee6c8db8483c130b64c9e2997a0d04084e6094f4d695b67a50531c43aa5849"
+  },
+  "validation": {
+    "average_precision": 0.547501002100716,
+    "precision_illicit": 0.652014652014652,
+    "recall_illicit": 0.5728077232502011,
+    "f1_illicit": 0.6098501070663812,
+    "balanced_accuracy": 0.7487428110800064,
+    "threshold": 0.9496455788612366,
+    "confusion_matrix_labels_0_1": [
+      [
+        4665,
+        380
+      ],
+      [
+        531,
+        712
+      ]
+    ],
+    "known_nodes": 6288,
+    "illicit_nodes": 1243
+  },
+  "per_time_step": [
+    {
+      "time_step": 25,
+      "known_nodes": 594,
+      "illicit_nodes": 118,
+      "average_precision": 0.6457958068133066
+    },
+    {
+      "time_step": 26,
+      "known_nodes": 517,
+      "illicit_nodes": 96,
+      "average_precision": 0.5338248719196211
+    },
+    {
+      "time_step": 27,
+      "known_nodes": 206,
+      "illicit_nodes": 24,
+      "average_precision": 0.8012869781376271
+    },
+    {
+      "time_step": 28,
+      "known_nodes": 284,
+      "illicit_nodes": 85,
+      "average_precision": 0.9265236165172197
+    },
+    {
+      "time_step": 29,
+      "known_nodes": 1174,
+      "illicit_nodes": 329,
+      "average_precision": 0.5191368354605284
+    },
+    {
+      "time_step": 30,
+      "known_nodes": 524,
+      "illicit_nodes": 83,
+      "average_precision": 0.6839082180670186
+    },
+    {
+      "time_step": 31,
+      "known_nodes": 710,
+      "illicit_nodes": 106,
+      "average_precision": 0.34209032967703257
+    },
+    {
+      "time_step": 32,
+      "known_nodes": 1323,
+      "illicit_nodes": 342,
+      "average_precision": 0.628321472749104
+    },
+    {
+      "time_step": 33,
+      "known_nodes": 441,
+      "illicit_nodes": 23,
+      "average_precision": 0.3664563288217184
+    },
+    {
+      "time_step": 34,
+      "known_nodes": 515,
+      "illicit_nodes": 37,
+      "average_precision": 0.536242231510846
+    }
+  ],
+  "training": {
+    "best_epoch": 5,
+    "epochs_run": 11,
+    "fit_with_validation_seconds": 4.308782083000551,
+    "validation_graph_inference_seconds": 0.05519790499965893,
+    "trainable_parameters": 29570
+  },
+  "resources": {
+    "peak_process_rss_mib": 631.6015625,
+    "device": "cpu",
+    "max_active_snapshot_nodes": 7880,
+    "max_active_snapshot_edges": 0,
+    "full_numpy_dataset_resident_in_host_memory": true
+  },
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scikit-learn": "1.8.0",
+    "torch": "2.12.0+cpu",
+    "torch-geometric": "2.8.1"
+  },
+  "matching_tabular_baselines": [
+    {
+      "run": "baseline_seed42_all_01711346_903ac5df",
+      "environment": {
+        "python": "3.13.14",
+        "numpy": "2.3.5",
+        "pandas": "2.2.3",
+        "scikit-learn": "1.8.0"
+      },
+      "validation_models": {
+        "random_forest": {
+          "average_precision": 0.7511523215492639,
+          "precision_illicit": 0.9075342465753424,
+          "recall_illicit": 0.6395816572807723,
+          "f1_illicit": 0.7503539405379896,
+          "balanced_accuracy": 0.8117630783926161,
+          "threshold": 0.19670550186688857,
+          "confusion_matrix_labels_0_1": [
+            [
+              4964,
+              81
+            ],
+            [
+              448,
+              795
+            ]
+          ],
+          "known_nodes": 6288,
+          "illicit_nodes": 1243,
+          "fit_seconds": 1.5806701670007897,
+          "validation_prediction_seconds": 0.026895916998910252
+        },
+        "mlp": {
+          "average_precision": 0.5662233633452473,
+          "precision_illicit": 0.6758817921830315,
+          "recall_illicit": 0.5703942075623492,
+          "f1_illicit": 0.618673647469459,
+          "balanced_accuracy": 0.7515003743460904,
+          "threshold": 0.8149588108062744,
+          "confusion_matrix_labels_0_1": [
+            [
+              4705,
+              340
+            ],
+            [
+              534,
+              709
+            ]
+          ],
+          "known_nodes": 6288,
+          "illicit_nodes": 1243,
+          "fit_and_validation_selection_seconds": 0.21662858399940887,
+          "validation_prediction_seconds": 0.0013765829935437068,
+          "best_epoch": 1,
+          "epochs_run": 7,
+          "scaler_fit_max_time_step": 16
+        }
+      }
+    }
+  ],
+  "notes": [
+    "One initial seed; validation chooses checkpoint and threshold.",
+    "Original edges are directed payment flows; no cross-step edges are invented.",
+    "Completed-snapshot benchmark; not a live as-of transaction decision.",
+    "This is a CPU reference, not distributed GNN training or a scalability result."
+  ]
+}

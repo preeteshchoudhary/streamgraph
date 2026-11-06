@@ -1,12 +1,13 @@
 {
-  "milestone": "1 - dataset integrity and chronological baselines",
+  "milestone": "2 - source-only GraphSAGE reference and edge-free control",
   "dataset_nodes": 203769,
   "dataset_edges": 234355,
   "source_training_known_nodes": 16044,
   "validation_known_nodes": 6288,
-  "random_forest_validation_ap": 0.7480704166440473,
+  "random_forest_validation_ap": 0.7511523215492639,
   "mlp_validation_ap": 0.5662233633452473,
-  "integrity_tests_passed": 10,
+  "integrity_tests_passed": 21,
+  "baseline_integrity_tests_passed": 13,
   "notebook_cell_logic_executed": true,
   "final_test_evaluated": false,
   "validated_python": "3.12.14",
@@ -19,11 +20,18 @@
     "source-only scaling",
     "RF and MLP",
     "graph snapshot export",
-    "HTML report"
+    "HTML report",
+    "CPU GraphSAGE on original snapshots",
+    "edge-free graph ablation"
   ],
   "next": [
-    "GraphSAGE",
     "DANN/GRL",
-    "Spark snapshot replay"
-  ]
+    "Spark snapshot replay",
+    "bounded neighbor sampling"
+  ],
+  "graphsage_validation_ap": 0.4938786027502855,
+  "graphsage_edge_free_validation_ap": 0.547501002100716,
+  "graph_integrity_tests_passed_locally": 21,
+  "graph_pytorch_version": "2.12.0+cpu",
+  "graph_pyg_version": "2.8.1"
 }

@@ -29,3 +29,34 @@ jobs:
         run: python -m compileall -q src tests
       - name: Run integrity tests
         run: python -m unittest discover -s tests -v
+  graph:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python: '3.11'
+          - os: macos-latest
+            python: '3.13'
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-graph.txt
+      - name: Install CPU PyTorch on Linux
+        if: runner.os == 'Linux'
+        run: python -m pip install 'torch==2.12.0' --index-url https://download.pytorch.org/whl/cpu
+      - name: Install and verify graph dependencies
+        run: |
+          python -m pip install -r requirements-graph.txt
+          python -m pip install --no-deps -e .
+          python -c "import torch, torch_geometric; print(torch.__version__, torch_geometric.__version__)"
+      - name: Run graph and temporal-integrity tests
+        run: python -m unittest discover -s tests -v

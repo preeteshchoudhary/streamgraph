@@ -17,10 +17,16 @@ from streamgraph.report import build_report
 
 def doctor() -> None:
     print("Python:", platform.python_version(), sys.executable)
+    print("Platform:", platform.system(), platform.machine(), platform.mac_ver()[0])
     for name in ["numpy", "pandas", "scikit-learn", "matplotlib"]:
         print(name + ":", importlib.metadata.version(name))
     print("Java:", shutil.which("java") or "not installed (needed at the later Spark stage)")
-    print("Milestone 1 uses CPU Python; PyTorch and Spark are later additions.")
+    for name in ["torch", "torch-geometric"]:
+        try:
+            print(name + ":", importlib.metadata.version(name))
+        except importlib.metadata.PackageNotFoundError:
+            print(name + ": not installed (optional GraphSAGE dependency)")
+    print("Baseline commands use CPU Python. GraphSAGE is optional; Spark integration is a later milestone.")
 
 
 def run_workflow(argv=None) -> None:
@@ -34,6 +40,9 @@ def run_workflow(argv=None) -> None:
     commands.add_parser("prepare", help="Validate raw data and cache numerical graph arrays")
     commands.add_parser("audit", help="Write and print the dataset and split audit")
     commands.add_parser("train", help="Fit RF/MLP; evaluate validation only")
+    graph = commands.add_parser("train-graph", help="Fit CPU GraphSAGE; evaluate chronological validation only")
+    graph.add_argument("--graph-config", type=Path, default=Path("configs/graphsage.json"))
+    graph.add_argument("--edges", choices=["original", "none"], help="Override the graph-edge ablation setting")
     commands.add_parser("run", help="Download, prepare, audit, train, report, and export snapshot 1")
     snapshot = commands.add_parser("snapshot", help="Export one original graph snapshot as NPZ")
     snapshot.add_argument("--step", type=int, default=1)
@@ -66,7 +75,17 @@ def run_workflow(argv=None) -> None:
     if args.command == "snapshot":
         output = root / f"data/processed/snapshot_{args.step:02}.npz"
         print(json.dumps(export_snapshot(dataset, args.step, output, config["feature_view"]), indent=2)); return
-    if args.command in {"train", "run"}:
+    if args.command == "train-graph":
+        try:
+            from streamgraph.graph import train_graphsage
+        except ModuleNotFoundError as error:
+            raise ValueError("Install the optional graph stack with scripts/run_graph.sh or requirements-graph.txt") from error
+        graph_path = args.graph_config if args.graph_config.is_absolute() else root / args.graph_config
+        settings = json.loads(graph_path.read_text())
+        if args.edges:
+            settings["edge_mode"] = args.edges
+        train_graphsage(dataset, config, settings, root / "artifacts")
+    elif args.command in {"train", "run"}:
         write_json(audit_path, audit(dataset, config))
         run_dir = train_baselines(dataset, config, root / "artifacts")
         print("Report:", build_report(audit_path, run_dir))
