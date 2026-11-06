@@ -10,10 +10,13 @@ import hashlib
 import json
 from pathlib import Path
 import shutil
+import ssl
 import tempfile
+from urllib.error import URLError
 from urllib.request import Request, urlopen
 from zipfile import ZipFile
 
+import certifi
 import numpy as np
 import pandas as pd
 
@@ -26,6 +29,31 @@ FILES = (
     "elliptic_txs_edgelist.csv",
     "elliptic_txs_classes.csv",
 )
+
+
+def download_ssl_context() -> ssl.SSLContext:
+    """Retain platform/custom trust roots and add certifi's public CA bundle."""
+    context = ssl.create_default_context()
+    context.load_verify_locations(cafile=certifi.where())
+    return context
+
+
+def fetch_archive(url: str, destination: Path) -> None:
+    request = Request(url, headers={"User-Agent": "StreamGraphResearch/0.1.1"})
+    try:
+        with urlopen(request, timeout=90, context=download_ssl_context()) as response, destination.open("wb") as output:
+            if response.status != 200:
+                raise OSError(f"Unexpected HTTP status {response.status}")
+            shutil.copyfileobj(response, output, length=2 * 1024 * 1024)
+    except (URLError, ssl.SSLCertVerificationError) as error:
+        reason = getattr(error, "reason", error)
+        if isinstance(reason, ssl.SSLCertVerificationError):
+            raise OSError(
+                "HTTPS certificate verification failed. On python.org macOS installs, run "
+                "the Install Certificates.command in /Applications/Python <version>/, "
+                "then retry. StreamGraph keeps TLS verification enabled."
+            ) from error
+        raise OSError(f"Dataset download failed: {reason}") from error
 
 
 def utc_now() -> str:
@@ -65,11 +93,7 @@ def download(raw_dir: Path, force: bool = False) -> dict:
             print(f"Downloading {filename} from the PyG-maintained mirror", flush=True)
             with tempfile.TemporaryDirectory(prefix="streamgraph-") as temporary_dir:
                 archive_path = Path(temporary_dir) / "download.zip"
-                request = Request(url, headers={"User-Agent": "StreamGraphResearch/0.1"})
-                with urlopen(request, timeout=90) as response, archive_path.open("wb") as output:
-                    if response.status != 200:
-                        raise OSError(f"Unexpected HTTP status {response.status}")
-                    shutil.copyfileobj(response, output, length=2 * 1024 * 1024)
+                fetch_archive(url, archive_path)
                 with ZipFile(archive_path) as archive:
                     matching = [name for name in archive.namelist() if Path(name).name == filename]
                     if len(matching) != 1:

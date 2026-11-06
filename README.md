@@ -12,7 +12,7 @@ The `artifacts/` directory contains an actual initial run on Elliptic, not synth
 
 ## Quick start on macOS with VS Code
 
-1. Extract this project, then open the `streamgraph` folder in VS Code.
+1. Clone this repository or extract the starter archive, then open the `streamgraph` folder in VS Code.
 2. Select **Terminal > New Terminal**. Check that the terminal is inside this folder.
 3. Run:
 
@@ -22,7 +22,7 @@ bash scripts/run_macos.sh
 
 The script creates `.venv`, installs the baseline dependencies, runs integrity tests, downloads the three CSVs from the PyG-maintained mirror, and runs the experiment. The raw dataset and numerical cache require approximately 1 GB of working disk space; models and outputs need additional space. The first download includes a roughly 151 MB feature archive.
 
-The project requires Python 3.11 or newer. Your existing Python 3.13 installation can be used for this baseline stage. The included run was verified with Python 3.12 and the exact package versions in `requirements.txt`. Java and a GPU are not needed for this milestone; Java is needed for the later Spark stage.
+The project requires Python 3.11 or newer. Your existing Python 3.13 installation can be used for this baseline stage. Saved runs record their Python and package versions in `results.json`. Java and a GPU are not needed for this milestone; Java is needed for the later Spark stage.
 
 After the script finishes, select the `.venv` interpreter in VS Code and open `artifacts/baseline_*/report.html` in a browser. Each report is a standalone HTML file with embedded charts.
 
@@ -45,6 +45,25 @@ streamgraph doctor
 ```
 
 ## Commands
+
+### macOS HTTPS certificate error
+
+If a python.org macOS installation reports `CERTIFICATE_VERIFY_FAILED: unable to get local issuer certificate`, complete its certificate setup. For Python 3.13 run:
+
+```bash
+/bin/sh "/Applications/Python 3.13/Install Certificates.command"
+```
+
+After `-- update complete`, activate the project environment and run `streamgraph run` again. This is the certificate setup described in the [official Python macOS guide](https://docs.python.org/3.13/using/mac.html). The Matplotlib first-run font-cache message is normal.
+
+Version 0.1.1 adds certifi's certificate bundle to the verified download context and reports readable connection errors through the installed `streamgraph` command. Certificate and hostname verification remain enabled. After pulling this update into an existing environment, install the new dependency before retrying:
+
+```bash
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m pip install --no-deps -e .
+streamgraph run
+```
 
 Run from the project directory, or use `streamgraph --root /absolute/project/path COMMAND`.
 
@@ -101,7 +120,7 @@ artifacts/                       measured initial run and audit
 docs/                            next milestone and research protocol
 ```
 
-Raw CSVs, the processed full dataset, and snapshot arrays are downloaded/generated on your machine and are not bundled in the starter archive. The initial fitted models are included under the measured run's `models/` directory.
+Raw CSVs, the processed full dataset, snapshot arrays, and fitted models are excluded from Git. `streamgraph run` downloads the raw data and regenerates the cache, models, and reports locally. Recorded validation summaries are available under `artifacts/`.
 
 ## Next milestone
 

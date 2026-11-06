@@ -4,11 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "streamgraph-research"
-version = "0.1.0"
+version = "0.1.1"
 description = "Chronological Elliptic baselines for a Spark domain-adaptive graph-learning project"
 requires-python = ">=3.11"
 dependencies = [
-  "numpy>=2.0,<3", "pandas>=2.2,<3", "scikit-learn>=1.7,<2", "matplotlib>=3.9,<4"
+  "numpy>=2.0,<3", "pandas>=2.2,<3", "scikit-learn>=1.7,<2", "matplotlib>=3.9,<4",
+  "certifi>=2024.2.2"
 ]
 
 [project.scripts]

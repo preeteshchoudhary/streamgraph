@@ -23,7 +23,7 @@ def doctor() -> None:
     print("Milestone 1 uses CPU Python; PyTorch and Spark are later additions.")
 
 
-def main(argv=None) -> None:
+def run_workflow(argv=None) -> None:
     parser = argparse.ArgumentParser(prog="streamgraph", description=__doc__)
     parser.add_argument("--root", type=Path, default=Path.cwd(), help="Project directory")
     parser.add_argument("--config", type=Path, default=Path("configs/baseline.json"))
@@ -83,9 +83,13 @@ def main(argv=None) -> None:
         print("Report:", build_report(audit_path, run_dir))
 
 
-if __name__ == "__main__":
+def main(argv=None) -> None:
     try:
-        main()
+        run_workflow(argv)
     except (FileNotFoundError, ValueError, OSError) as error:
         print(f"StreamGraph: {error}", file=sys.stderr)
-        sys.exit(1)
+        raise SystemExit(1) from None
+
+
+if __name__ == "__main__":
+    main()
