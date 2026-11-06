@@ -6,7 +6,7 @@ Working application: financial graph analysis, beginning with illicit-transactio
 
 ## Current milestone
 
-Milestone 1 implements data acquisition, integrity checks, chronological splits, random-forest/MLP baselines, validation reporting, and graph-snapshot export. It does not yet implement GraphSAGE, DANN/GRL, or Spark processing. Those components will build on the same validated data and protocol.
+Milestone 1 implements data acquisition, integrity checks, chronological splits, random-forest/MLP baselines, validation reporting, and graph-snapshot export. Milestone 2 adds an optional CPU GraphSAGE reference on completed snapshots, with the same data protocol and an edge-free control. DANN/GRL and Spark processing remain subsequent work.
 
 The `artifacts/` directory contains an actual initial run on Elliptic, not synthetic example scores. Open the run's `report.html` to see it. This run uses one seed and reports **validation/model-selection measurements**. The final test period has not been scored.
 
@@ -44,6 +44,18 @@ source .venv/bin/activate
 streamgraph doctor
 ```
 
+## GraphSAGE milestone
+
+On Linux or a native Apple Silicon Mac with macOS 14+, run:
+
+```bash
+bash scripts/run_graph.sh
+```
+
+This installs the optional pinned PyTorch/PyG stack and runs `streamgraph train-graph`. The script checks platform support first. For the graph definition, edge-free ablation, resource limits, and exact protocol, see [docs/GRAPHSAGE.md](docs/GRAPHSAGE.md).
+
+The manual **GraphSAGE experiment** workflow can also run the experiment on a GitHub-hosted Linux CPU runner and save its results/model as an artifact. This route supports development from machines without compatible local PyTorch wheels, including Intel Macs.
+
 ## Commands
 
 ### macOS HTTPS certificate error
@@ -74,6 +86,8 @@ Run from the project directory, or use `streamgraph --root /absolute/project/pat
 | `streamgraph prepare` | Validate the CSVs, cache graph arrays, and write a data audit. |
 | `streamgraph audit` | Rebuild dataset and split statistics. |
 | `streamgraph train` | Fit both source-only baselines; select epochs/thresholds on validation. |
+| `streamgraph train-graph` | Fit CPU GraphSAGE on completed source snapshots and score validation only. |
+| `streamgraph train-graph --edges none` | Run the same graph architecture with no message-passing edges. |
 | `streamgraph snapshot --step 1` | Export the original time-step graph as an NPZ file for the next GNN stage. |
 | `streamgraph report` | Rebuild the latest completed run's standalone HTML report. |
 | `streamgraph run` | Run the complete milestone-one workflow. |
@@ -86,9 +100,9 @@ The configured time ranges are proposed project settings, not an asserted reprod
 
 | Original time steps | Role | How labels are used now |
 | --- | --- | --- |
-| 1-16 | Source | Known labels train RF/MLP. |
+| 1-16 | Source | Known labels train RF/MLP/GraphSAGE. |
 | 17-24 | Historical adaptation prefix | Reserved for later DANN work; no task labels used now. |
-| 25-34 | Validation | MLP checkpoint and prediction-threshold selection. |
+| 25-34 | Validation | MLP/GraphSAGE checkpoint and prediction-threshold selection. |
 | 35-49 | Final test | Held out from fitting, threshold selection, and model scoring in this milestone. |
 
 The label mapping is `1 -> illicit (1)`, `2 -> licit (0)`, `unknown -> -1`. Unknown nodes stay available for permitted graph context, but never become negative training examples.
@@ -124,7 +138,7 @@ Raw CSVs, the processed full dataset, snapshot arrays, and fitted models are exc
 
 ## Next milestone
 
-Implement GraphSAGE on the same feature view, source labels, and validation interval. Compare it with the MLP before adding DANN. Keep final-test scoring for a later protocol freeze. See `docs/NEXT_MILESTONE.md`.
+Compare the GraphSAGE and edge-free results with the matched RF/MLP baselines, then add the DANN/GRL domain head. Preserve the declared label-access rules and final-test separation. Spark replay and bounded sampling follow the offline reference. See [docs/GRAPHSAGE.md](docs/GRAPHSAGE.md) and `docs/NEXT_MILESTONE.md`.
 
 ## Primary sources
 

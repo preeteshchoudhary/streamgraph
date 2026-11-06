@@ -1,24 +1,14 @@
-# Milestone 2: a matched GraphSAGE baseline
+# Next milestone: DANN/GRL after GraphSAGE
 
-The goal is to establish whether observed graph relationships add predictive value beyond exactly the same node features.
+The graph reference and edge-free control are implemented. See docs/GRAPHSAGE.md and docs/VALIDATION_M2.md. Their initial results are development measurements; domain adaptation is a hypothesis to test rather than a guaranteed improvement.
 
-1. Add a compatible CPU PyTorch/PyTorch Geometric environment. Verify installation and neighbor sampling before freezing versions.
-2. Read the prepared arrays. Keep source steps 1-16, validation steps 25-34, and the current known-label masks unchanged.
-3. Fit the scaler on the same source rows as the MLP. Apply it without refitting to the allowed validation snapshot.
-4. Build a two-layer mean-aggregation GraphSAGE candidate, initially 64 hidden units, dropout, and a binary task head.
-5. Begin with each complete source snapshot; these graphs are small enough to establish a correct full-snapshot reference before sampling.
-6. Compute supervised loss only for known source labels. Unknown source nodes may pass messages, but carry no task targets.
-7. Use observed directed payment edges and record the message direction. Any symmetrized-edge experiment must be a separately logged ablation.
-8. Select model checkpoint and threshold on chronological validation only. Predict a completed validation snapshot using its permitted context; do not attach future snapshots to training.
-9. Compare RF, MLP, and GraphSAGE on average precision, illicit recall/F1, training time, inference cost, and memory under matched inputs.
-10. Add neighbor sampling and compare it with the full-snapshot reference. Only then add the domain classifier and GRL.
+1. Reuse the GraphSAGE encoder and task head. Source task labels remain restricted to steps 1-16.
+2. Add a domain classifier with a gradient reversal layer. Use steps 17-24 as a historical unlabelled adaptation prefix, keeping its task labels hidden.
+3. Minimize source classification loss and domain-head classification loss. Reverse the domain gradient only at the encoder interface.
+4. Balance domain batches, sweep a small validation-selected alignment strength, and compare with lambda = 0 under matched task-label budgets.
+5. Use validation 25-34 for model selection, and leave final test 35-49 untouched until the protocol is frozen.
+6. Report task/domain loss, illicit AP and recall, memory, and update cost. Low domain accuracy alone does not prove useful invariance.
 
-## DANN stage after that
+A source-only generalization arm uses a different information budget and must be compared separately.
 
-Use labelled source snapshots and the designated unlabelled historical adaptation prefix (steps 17-24). Domain labels identify the historical blocks. Keep adaptation-prefix task labels hidden during fitting. The encoder receives a reversed domain gradient; the domain head receives the ordinary minimizing gradient.
-
-The alternative source-only generalization experiment has a different task-label budget and must be evaluated as a separate arm. Do not quietly pool the adaptation prefix into supervised training.
-
-## Spark stage after the offline comparison
-
-Replay original snapshot records in order, validate/prepare them in PySpark, and hand completed graph batches to the GNN worker. Preserve model versions and idempotent prediction keys. Measure pipeline time separately from learning time. Spark does not automatically distribute the GNN.
+After offline experiments are reproducible, add PySpark replay of completed snapshots and a committed graph-batch handoff. Record throughput, handoff/inference time, lag, and memory separately. Begin with monitoring and periodic updates under a declared label delay; drift-triggered updates and source replay are controlled extensions. Spark preprocessing does not automatically distribute GNN training.

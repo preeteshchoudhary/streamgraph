@@ -35,3 +35,5 @@ data/checkpoints/
 *.npz
 *.npy
 artifacts/*/models/
+artifacts/graphsage_*/validation_predictions.csv
+artifacts/graphsage_*/report.html

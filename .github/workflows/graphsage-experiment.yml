@@ -1,0 +1,53 @@
+name: GraphSAGE experiment
+on:
+  workflow_dispatch:
+    inputs:
+      edge_mode:
+        description: Graph edges for the controlled experiment
+        required: true
+        type: choice
+        default: original
+        options: [original, none]
+permissions:
+  contents: read
+jobs:
+  experiment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-graph.txt
+      - name: Install CPU graph environment
+        run: |
+          python -m pip install 'torch==2.12.0' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r requirements-graph.txt
+          python -m pip install --no-deps -e .
+      - name: Check model and temporal integrity
+        run: python -m unittest discover -s tests -v
+      - name: Prepare original Elliptic data
+        run: |
+          streamgraph download
+          streamgraph prepare
+      - name: Train and evaluate validation only
+        env:
+          EDGE_MODE: ${{ inputs.edge_mode }}
+        run: streamgraph train-graph --edges "$EDGE_MODE"
+      - name: Save experiment results and model
+        uses: actions/upload-artifact@v7
+        with:
+          name: graphsage-${{ inputs.edge_mode }}-${{ github.run_id }}
+          retention-days: 7
+          path: |
+            artifacts/graphsage_*_${{ inputs.edge_mode }}_*/config.json
+            artifacts/graphsage_*_${{ inputs.edge_mode }}_*/results.json
+            artifacts/graphsage_*_${{ inputs.edge_mode }}_*/learning_curve.csv
+            artifacts/graphsage_*_${{ inputs.edge_mode }}_*/run_status.json
+            artifacts/graphsage_*_${{ inputs.edge_mode }}_*/models/graphsage.pt
